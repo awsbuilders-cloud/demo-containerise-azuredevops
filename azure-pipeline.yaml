@@ -1,12 +1,12 @@
 pool:
-  vmImage: windows-2019
+  vmImage: ubuntu-18.04
 
 trigger:
   - master
 
 stages:
-  - stage: Start
+  - stage: Prepare
     jobs:
-      - job: SayHello
+      - job: InstallAwsCdk
         steps:
-          - powershell: Write-Host "Hello" 
+          - bash: npm install -g aws-cdk 
