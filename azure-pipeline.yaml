@@ -10,8 +10,5 @@ stages:
       - job: InstallAwsCdk
         steps:
           - bash: sudo npm install -g aws-cdk --allow-root
-      
-      - job: Deploy
-        steps:
           - bash: cd infra 
           - bash: cdk diff
