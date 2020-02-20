@@ -12,4 +12,5 @@ stages:
           - bash: |
               sudo npm install -g aws-cdk --allow-root
               cd infra 
+              npm install
               cdk diff
