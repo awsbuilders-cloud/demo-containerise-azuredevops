@@ -1,3 +1,6 @@
+pool:
+  vmImage: windows2019
+
 trigger:
   - master
 
