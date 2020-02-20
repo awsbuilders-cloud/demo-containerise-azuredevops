@@ -1,0 +1,6 @@
+stages:
+  - stage: Start
+    jobs:
+      - job: Say hello
+        steps:
+          - powershell: Write-Host "Hello" 
