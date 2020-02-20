@@ -13,6 +13,5 @@ stages:
       
       - job: Deploy
         steps:
-          - bash: 
-            - cd infra
-            - cdk diff
+          - bash: cd infra 
+          - bash: cdk diff
