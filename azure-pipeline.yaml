@@ -1,6 +1,9 @@
+trigger:
+  - master
+
 stages:
   - stage: Start
     jobs:
-      - job: Say hello
+      - job: SayHello
         steps:
           - powershell: Write-Host "Hello" 
