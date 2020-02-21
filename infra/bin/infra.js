@@ -4,8 +4,8 @@ const {ContainerMeetupApplication} = require('../lib/containerMeetupApplication'
 
 function getEnv() {
     return {
-        account: process.env.CDK_DEFAULT_ACCOUNT,
-        region: process.env.CDK_DEFAULT_REGION
+        account: process.env.CDK_DEPLOY_ACCOUNT,
+        region: process.env.CDK_DEPLOY_REGION
     };
 }
 
