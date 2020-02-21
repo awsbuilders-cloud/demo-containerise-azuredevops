@@ -8,6 +8,9 @@ stages:
   - stage: Prepare
     jobs:
       - job: InstallAwsCli
+        variables:
+          AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+          AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
         steps:
             - bash: |
                 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
