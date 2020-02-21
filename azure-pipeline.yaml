@@ -7,17 +7,10 @@ trigger:
 stages:
   - stage: Prepare
     jobs:
-      - job: InstallAwsCli
+      - job: InstallAwsCdk
         variables:
           AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID_ENCRYPTED)
           AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY_ENCRYPTED)
-        steps:
-            - bash: |
-                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                unzip awscliv2.zip
-                sudo ./aws/install
-                aws s3 ls
-      - job: InstallAwsCdk
         steps:
           - bash: |
               sudo npm install -g aws-cdk --allow-root
