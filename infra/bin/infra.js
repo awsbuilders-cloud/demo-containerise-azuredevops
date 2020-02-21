@@ -2,8 +2,19 @@ const cdk = require('@aws-cdk/core');
 const {ContainerMeetupEnvironment} = require('../lib/containerMeetupEnvironment');
 const {ContainerMeetupApplication} = require('../lib/containerMeetupApplication');
 
+function getEnv() {
+    return {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION
+    };
+}
+
 const app = new cdk.App();
-const environment = new ContainerMeetupEnvironment(app, 'container-meetup-environment');
+const environment = new ContainerMeetupEnvironment(app, 'container-meetup-environment', {
+    env: getEnv()
+});
+
 const application = new ContainerMeetupApplication(app, 'container-meetup-application', { 
-    vpc: environment.vpc
+    vpc: environment.vpc,
+    env: getEnv()
 });
