@@ -1,4 +1,5 @@
 const cdk = require('@aws-cdk/core');
+const iam = require('@aws-cdk/aws-iam');
 const ec2 = require('@aws-cdk/aws-ec2');
 const autoScaling = require('@aws-cdk/aws-autoscaling');
 
@@ -12,6 +13,16 @@ class ContainerMeetupApplication extends cdk.Stack {
      */
     constructor(scope, id, props) {
         super(scope, id, props);
+        const instanceRole = new iam.Role(this, 'container-meetup-application-role', {
+            roleName: 'container-meetup-application-role'
+        });
+
+        instanceRole.addToPolicy(new iam.PolicyStatement({
+            effect: 'Allow',
+            actions: ['s3:getObject'],
+            resources: [props.buildArtifactsBucket.Arn]
+        }));
+
         // const asg = new autoScaling.AutoScalingGroup(this, `${applicationName}-asg`, {
         //     vpc: props.vpc,
         //     minCapacity: 1,

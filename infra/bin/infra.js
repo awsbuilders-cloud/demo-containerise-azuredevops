@@ -16,5 +16,6 @@ const environment = new ContainerMeetupEnvironment(app, 'container-meetup-enviro
 
 const application = new ContainerMeetupApplication(app, 'container-meetup-application', { 
     vpc: environment.vpc,
-    env: getEnv()
+    env: getEnv(),
+    buildArtifactsBucket: environment.buildArtifactsBucket
 });
