@@ -15,3 +15,4 @@ stages:
               sudo npm install -g aws-cdk --allow-root
               cd infra
               npm install
+              cdk deploy container-meetup-application
