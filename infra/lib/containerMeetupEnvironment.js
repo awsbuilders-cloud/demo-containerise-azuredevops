@@ -7,7 +7,7 @@ const secretsManager = require('@aws-cdk/aws-secretsmanager')
 class ContainerMeetupEnvironment extends cdk.Stack {
 
   _createBuildUser() {
-    const password = new secretsManager.Secret(this, 'BuildPipelinePassword', { 
+    const password = new secretsManager.Secret(this, 'BuildPipelinePassword', {
       secretName: 'container-meetup-build-pipeline-password'
     });
 
@@ -16,10 +16,7 @@ class ContainerMeetupEnvironment extends cdk.Stack {
       userName: 'container-meetup-build-pipeline',
     });
 
-    user.attachInlinePolicy(new iam.Policy(this, 'BuildArtifactsBucketReadWritePolicy', {
-      actions: ['s3:GetObject', 's3:PutObject'],
-      resources: [this.buildArtifactsBucket.bucketArn]
-    }));
+    user.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
 
     const accessKey = new iam.CfnAccessKey(this, 'BuildPipelineUserDefaultAccessKey', {
       userName: user.userName
