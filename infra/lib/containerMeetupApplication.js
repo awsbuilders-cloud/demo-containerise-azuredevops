@@ -21,7 +21,7 @@ class ContainerMeetupApplication extends cdk.Stack {
         instanceRole.addToPolicy(new iam.PolicyStatement({
             effect: 'Allow',
             actions: ['s3:getObject'],
-            resources: [props.buildArtifactsBucket.Arn]
+            resources: [props.buildArtifactsBucket.bucketArn]
         }));
 
         // const asg = new autoScaling.AutoScalingGroup(this, `${applicationName}-asg`, {
