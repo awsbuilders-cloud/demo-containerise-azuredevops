@@ -34,7 +34,8 @@ class ContainerMeetupEnvironment extends cdk.Stack {
     return new s3.Bucket(this, 'BuildArtifacts', {
       bucketName: 'container-meetup-build-artifacts',
       encryption: s3.BucketEncryption.S3_MANAGED,
-      versioned: true
+      versioned: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY 
     });
   }
 
