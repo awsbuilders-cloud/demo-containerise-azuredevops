@@ -13,7 +13,8 @@ class ContainerMeetupApplication extends cdk.Stack {
      */
     constructor(scope, id, props) {
         super(scope, id, props);
-        const instanceRole = new iam.Role(this, 'container-meetup-application-role', {
+        const instanceRole = new iam.Role(this, 'ContainerMeetupApplicationRole', {
+            assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
             roleName: 'container-meetup-application-role'
         });
 
