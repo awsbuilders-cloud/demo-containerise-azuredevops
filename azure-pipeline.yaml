@@ -13,7 +13,8 @@ stages:
           AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY_ENCRYPTED)
         steps:
           - bash: |
-              echo "AWS_ACCESS_KEY_ID is $AWS_ACCESS_KEY_ID $(AWS_ACCESS_KEY_ID_ENCRYPTED)"
+              export AWS_ACCESS_KEY_ID="$(AWS_ACCESS_KEY_ID_ENCRYPTED)"
+              export AWS_SECRET_ACCESS_KEY="$(AWS_SECRET_ACCESS_KEY_ENCRYPTED)"
               sudo npm install -g aws-cdk --allow-root
               cd infra
               npm install
