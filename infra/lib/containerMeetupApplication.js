@@ -1,6 +1,7 @@
 const cdk = require('@aws-cdk/core');
 const iam = require('@aws-cdk/aws-iam');
 const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
+const ecs = require('@aws-cdk/aws-ecs');
 const ec2 = require('@aws-cdk/aws-ec2');
 const autoScaling = require('@aws-cdk/aws-autoscaling');
 
@@ -22,7 +23,7 @@ class ContainerMeetupApplication extends cdk.Stack {
             taskImageOptions: {
                 containerName: 'container-meetup-application',
                 containerPort: 80,
-                image: props.ecr.repositoryUriForTag(process.env['GIT_COMMIT'])
+                image: ecs.ContainerImage.fromEcrRepository(props.ecr, process.env['GIT_COMMIT'] || 'latest')
             },
             memoryLimitMiB: 512, // Default is 512
             publicLoadBalancer: true // Default is false

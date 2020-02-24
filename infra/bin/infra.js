@@ -9,7 +9,6 @@ function getEnv() {
     };
 }
 
-console.log(JSON.stringify(process.env));
 const app = new cdk.App();
 const environment = new ContainerMeetupEnvironment(app, 'container-meetup-environment', {
     env: getEnv()
