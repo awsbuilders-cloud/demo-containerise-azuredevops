@@ -7,14 +7,32 @@ trigger:
 stages:
   - stage: Prepare
     jobs:
-      - job: InstallAwsCdk
+      - job: BuildAndDeploy
         steps:
           - bash: |
+              # Setup Environment
               export AWS_ACCESS_KEY_ID="$(AWS_ACCESS_KEY_ID_ENCRYPTED)"
               export AWS_SECRET_ACCESS_KEY="$(AWS_SECRET_ACCESS_KEY_ENCRYPTED)"
               export GIT_COMMIT="$(Build.SourceVersion)"
+
+              # Install AWS CLI
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              sudo ./aws/install
+
+              # Install CDK
               sudo npm install -g aws-cdk --allow-root
+
+              # Install CDK app for deploying environment and application infrastructure
               cd infra
               npm install
-              cdk deploy --require-approval never "container-meetup-environment"
-              cdk deploy --require-approval never "container-meetup-application"
+
+              # Deploy environment infrastructure changes
+              # cdk deploy --require-approval never "container-meetup-environment"
+
+              # Build and publish container
+              cd ..
+              $(aws ecr get-login --no-include-email) 
+
+              # Deploy the application
+              # cdk deploy --require-approval never "container-meetup-application"
