@@ -42,5 +42,5 @@ stages:
               docker push "$IMAGE_REPOSITORY:$GIT_COMMIT" 
 
               # Deploy the application
-              echo "deploying the app"
-              cdk deploy --require-approval never --app "container-meetup-application"
+              cd infra
+              cdk deploy --require-approval never "container-meetup-application"
