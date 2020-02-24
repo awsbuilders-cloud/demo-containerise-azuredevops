@@ -37,7 +37,7 @@ stages:
               cd ..
               docker build -t aspnetapp .
               docker tag aspnetapp "$IMAGE_REPOSITORY:$GIT_COMMIT" 
-              docker login -u AWS -p "$(aws ecr get-login-password)" "https://$REGISTRY"
+              aws ecr get-login-password | docker login -u AWS --password-stdin "https://$REGISTRY"
               docker push "$IMAGE_REPOSITORY:$GIT_COMMIT" 
 
               # Deploy the application
