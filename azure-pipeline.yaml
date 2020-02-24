@@ -15,6 +15,9 @@ stages:
               export AWS_SECRET_ACCESS_KEY="$(AWS_SECRET_ACCESS_KEY_ENCRYPTED)"
               export GIT_COMMIT="$(Build.SourceVersion)"
 
+              REGISTRY="https://$(CDK_DEPLOY_ACCOUNT).dkr.ecr.ap-southeast-2.amazonaws.com"
+              IMAGE_REPOSITORY="$REGISTRY/container-meetup-application"
+
               # Install AWS CLI
               curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
               unzip awscliv2.zip
@@ -32,7 +35,10 @@ stages:
 
               # Build and publish container
               cd ..
-              $(aws ecr get-login --no-include-email) 
+              docker build -t aspnetapp .
+              docker tag aspnetapp "$IMAGE_REPOSITORY:$GIT_COMMIT" 
+              docker login -u AWS -p "$(aws ecr get-login-password)" "$REGISTRY"
+              docker push "$IMAGE_REPOSITORY:$GIT_COMMIT" 
 
               # Deploy the application
               # cdk deploy --require-approval never "container-meetup-application"
