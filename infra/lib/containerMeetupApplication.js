@@ -1,5 +1,6 @@
 const cdk = require('@aws-cdk/core');
 const iam = require('@aws-cdk/aws-iam');
+const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
 const ec2 = require('@aws-cdk/aws-ec2');
 const autoScaling = require('@aws-cdk/aws-autoscaling');
 
