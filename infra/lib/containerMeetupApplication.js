@@ -16,13 +16,13 @@ class ContainerMeetupApplication extends cdk.Stack {
         // Create a load-balanced Fargate service and make it public
         const service = new ecs_patterns.ApplicationLoadBalancedFargateService(this, "FargateService", {
             serviceName: 'container-meetup-application',
-            cluster: cluster, // Required
+            cluster: props.ecsCluster, // Required
             cpu: 256, // Default is 256
             desiredCount: 3, // Default is 1
             taskImageOptions: {
                 containerName: 'container-meetup-application',
                 containerPort: 80,
-                image: ecs.ContainerImage.fromRegistry('container-meetup-application')
+                image: props.ecr.repositoryUriForTag(process.env['GIT_COMMIT'])
             },
             memoryLimitMiB: 512, // Default is 512
             publicLoadBalancer: true // Default is false
