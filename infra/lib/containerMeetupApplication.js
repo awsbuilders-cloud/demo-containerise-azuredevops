@@ -12,26 +12,26 @@ class ContainerMeetupApplication extends cdk.Stack {
     constructor(scope, id, props) {
         super(scope, id, props);
 
-        // // Create a load-balanced Fargate service and make it public
-        // const service = new ecs_patterns.ApplicationLoadBalancedFargateService(this, "FargateService", {
-        //     serviceName: 'container-meetup-application',
-        //     cluster: cluster, // Required
-        //     cpu: 256, // Default is 256
-        //     desiredCount: 3, // Default is 1
-        //     taskImageOptions: {
-        //         containerName: 'container-meetup-application',
-        //         containerPort: 8000,
-        //         image: props.ecr.
-        //     },
-        //     memoryLimitMiB: 512, // Default is 512
-        //     publicLoadBalancer: true // Default is false
-        // });
+        // Create a load-balanced Fargate service and make it public
+        const service = new ecs_patterns.ApplicationLoadBalancedFargateService(this, "FargateService", {
+            serviceName: 'container-meetup-application',
+            cluster: cluster, // Required
+            cpu: 256, // Default is 256
+            desiredCount: 3, // Default is 1
+            taskImageOptions: {
+                containerName: 'container-meetup-application',
+                containerPort: 80,
+                image: ecs.ContainerImage.fromRegistry('container-meetup-application')
+            },
+            memoryLimitMiB: 512, // Default is 512
+            publicLoadBalancer: true // Default is false
+        });
 
-        // service.taskDefinition.addToExecutionRolePolicy(new iam.PolicyStatement({
-        //     effect: iam.Effect.ALLOW,
-        //     actions: ['ecr:*'],
-        //     resources: ['*']
-        // }));
+        service.taskDefinition.addToExecutionRolePolicy(new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            actions: ['ecr:*'],
+            resources: ['*']
+        }));
     }
 }
 
