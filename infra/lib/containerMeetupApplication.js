@@ -18,12 +18,6 @@ class ContainerMeetupApplication extends cdk.Stack {
             roleName: 'container-meetup-application-role'
         });
 
-        instanceRole.addToPolicy(new iam.PolicyStatement({
-            effect: 'Allow',
-            actions: ['s3:getObject'],
-            resources: [props.buildArtifactsBucket.bucketArn]
-        }));
-
         // const asg = new autoScaling.AutoScalingGroup(this, `${applicationName}-asg`, {
         //     vpc: props.vpc,
         //     minCapacity: 1,
