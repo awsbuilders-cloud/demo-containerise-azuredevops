@@ -9,6 +9,7 @@ function getEnv() {
     };
 }
 
+console.log(JSON.stringify(process.env));
 const app = new cdk.App();
 const environment = new ContainerMeetupEnvironment(app, 'container-meetup-environment', {
     env: getEnv()
@@ -17,5 +18,5 @@ const environment = new ContainerMeetupEnvironment(app, 'container-meetup-enviro
 const application = new ContainerMeetupApplication(app, 'container-meetup-application', { 
     vpc: environment.vpc,
     env: getEnv(),
-    buildArtifactsBucket: environment.buildArtifactsBucket
+    ecr: environment.ecr
 });
