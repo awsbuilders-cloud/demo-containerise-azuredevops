@@ -3,6 +3,7 @@ const ec2 = require('@aws-cdk/aws-ec2');
 const iam = require('@aws-cdk/aws-iam');
 const s3 = require('@aws-cdk/aws-s3');
 const secretsManager = require('@aws-cdk/aws-secretsmanager')
+const ecr = require('@aws-cdk/aws-ecr');
 
 class ContainerMeetupEnvironment extends cdk.Stack {
 
@@ -39,6 +40,13 @@ class ContainerMeetupEnvironment extends cdk.Stack {
     });
   }
 
+  _createEcrRepository() {
+    return new ecr.Repository(this, 'EcrRepository', {
+      repositoryName: 'container-meetup-application',
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+  }
+
   /**
    *
    * @param {cdk.Construct} scope
@@ -50,6 +58,7 @@ class ContainerMeetupEnvironment extends cdk.Stack {
     this.vpc = new ec2.Vpc(this, 'ContainerMeetupVpc', { maxAzs: 3 });
     this.buildArtifactsBucket = this._createBuildArtifactsBucket();
     this.buildPipelineUser = this._createBuildUser();
+    this.ecr = this._createEcrRepository();
   }
 }
 
