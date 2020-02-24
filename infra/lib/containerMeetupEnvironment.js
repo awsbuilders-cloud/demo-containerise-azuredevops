@@ -28,6 +28,11 @@ class ContainerMeetupEnvironment extends cdk.Stack {
       value: accessKey.attrSecretAccessKey,
     });
 
+    new cdk.CfnOutput(this, 'BuildPipelineAccessKeyId', {
+      exportName: 'BuildPipelineAccessKeyId',
+      value: accessKey.ref
+    });
+
     return user;
   }
 
