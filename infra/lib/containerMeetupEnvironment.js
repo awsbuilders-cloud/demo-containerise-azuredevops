@@ -4,6 +4,7 @@ const iam = require('@aws-cdk/aws-iam');
 const s3 = require('@aws-cdk/aws-s3');
 const secretsManager = require('@aws-cdk/aws-secretsmanager')
 const ecr = require('@aws-cdk/aws-ecr');
+const ecs = require('@aws-cdk/aws-ecs');
 
 class ContainerMeetupEnvironment extends cdk.Stack {
 
@@ -47,6 +48,13 @@ class ContainerMeetupEnvironment extends cdk.Stack {
     });
   }
 
+  _createEcsCluster() {
+    return new ecs.Cluster(this, 'EcsCluster', {
+      clusterName: 'container-meetup-cluster',
+      vpc: this.vpc
+    });
+  }
+
   /**
    *
    * @param {cdk.Construct} scope
@@ -59,6 +67,7 @@ class ContainerMeetupEnvironment extends cdk.Stack {
     this.buildArtifactsBucket = this._createBuildArtifactsBucket();
     this.buildPipelineUser = this._createBuildUser();
     this.ecr = this._createEcrRepository();
+    this.ecsCluster = this._createEcsCluster();
   }
 }
 

@@ -15,4 +15,5 @@ stages:
               sudo npm install -g aws-cdk --allow-root
               cd infra
               npm install
-              cdk deploy --require-approval never "*"
+              cdk deploy --require-approval never "container-meetup-environment"
+              cdk deploy --require-approval never "container-meetup-application"
